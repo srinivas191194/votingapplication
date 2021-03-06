@@ -12,9 +12,13 @@ function Table({ data, email }) {
       id: id,
       email: email,
     };
-    const res = await axios.post("http://localhost:8000/cast", candidateId, {
-      headers,
-    });
+    const res = await axios.post(
+      "https://voting-server-application.herokuapp.com/cast",
+      candidateId,
+      {
+        headers,
+      }
+    );
     alert(res.data.msg);
     history.push("/");
   }

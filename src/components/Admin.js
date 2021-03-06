@@ -20,7 +20,7 @@ function Admin(props) {
 
     // fetch the candidates
     axios
-      .get("http://localhost:8000/contestents")
+      .get("https://voting-server-application.herokuapp.com/contestents")
       .then((res) => setusers(res.data))
       .catch((e) => console.log(e));
   }, []);

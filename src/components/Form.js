@@ -16,7 +16,10 @@ function Form() {
 
     if (variable1 && variable2) {
       axios
-        .post("http://localhost:8000/register", formData)
+        .post(
+          "https://voting-server-application.herokuapp.com/register",
+          formData
+        )
         .then(function (res) {
           alert(res.data.msg);
         })
@@ -37,28 +40,30 @@ function Form() {
     };
     console.log(formData);
     if (variable1 && variable2) {
-      axios.post("http://localhost:8000/login", formData).then(function (res) {
-        if (res.data.status == 200) {
-          console.log(res.data);
-          if (variable1 == "admin@gmail.com") {
-            // redirect to adimin page
-            history.push({
-              state: { email: variable1, password: variable2 },
-              pathname: "/admin",
-            });
-          } else if (res.data.votestatus) {
-            alert("Already Voted.");
+      axios
+        .post("https://voting-server-application.herokuapp.com/login", formData)
+        .then(function (res) {
+          if (res.data.status == 200) {
+            console.log(res.data);
+            if (variable1 == "admin@gmail.com") {
+              // redirect to adimin page
+              history.push({
+                state: { email: variable1, password: variable2 },
+                pathname: "/admin",
+              });
+            } else if (res.data.votestatus) {
+              alert("Already Voted.");
+            } else {
+              // redirection to voting
+              history.push({
+                state: { email: variable1, password: variable2 },
+                pathname: "/voting",
+              });
+            }
           } else {
-            // redirection to voting
-            history.push({
-              state: { email: variable1, password: variable2 },
-              pathname: "/voting",
-            });
+            alert(res.data.msg);
           }
-        } else {
-          alert(res.data.msg);
-        }
-      });
+        });
     } else {
       alert("Enter all details.");
     }
